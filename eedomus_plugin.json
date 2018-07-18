@@ -1,0 +1,53 @@
+{
+	"plugin_id": "pacapollens",
+	"name_fr": "Risque Allergique PACA",
+	"icon": "atmosud_pollens.png",
+	"version": "1.0",
+	"creation_date": "2018-07-17",
+	"modification_date": "2018-07-18",
+	"author": "timetre",
+	"description_fr": "Suivez les risques d'allergies aux pollens pour la région PACA, source : <i>AtmoSud</i>)",
+	"description_en": "",
+	"description_es": "",
+	"description_it": "",
+	"description_de": "",
+	"forum_link": "",
+	"parameters":
+	[
+		{
+			"parameter": "VILLE",
+			"description": "Ville",
+			"xtype": "combo",
+			"field": "width:200, allowBlank:false, store:['Aix-en-Provence', 'Gap', 'Marseille', 'Nice', 'Toulon', 'Avignon'], editable: false, shadow: true, triggerAction: 'all', typeAhead:true"
+		}
+	],
+	"devices":
+	[
+		{
+			"device_id": "atmosudpollens",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "plugin.name",
+			"icon": "atmosud_pollens.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"value_type": "list",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=atmosud_pollens.php",
+				"RAW_XPATH": "/IndicesPolliniques/Element[Ville='plugin.parameters.VILLE']/Indice",
+				"POLLING": "60"
+			},
+			"values":
+			[
+				{ "value": "ND", "description": "Non diffusé", "icon": "atmosud_pollens_ND.png" },
+				{ "value": 0, "description": "Nul", "icon": "atmosud_pollens_0.png" },
+				{ "value": 1, "description": "Très faible", "icon": "atmosud_pollens_1.png" },
+				{ "value": 2, "description": "Faible", "icon": "atmosud_pollens_2.png" },
+				{ "value": 3, "description": "Moyen", "icon": "atmosud_pollens_3.png" },
+				{ "value": 4, "description": "Elevé", "icon": "atmosud_pollens_4.png" },
+				{ "value": 5, "description": "Très élevé", "icon": "atmosud_pollens_5.png" }
+			]
+		}
+	]
+}
