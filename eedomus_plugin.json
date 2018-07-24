@@ -1,53 +1,79 @@
 {
 	"plugin_id": "pacapollens",
-	"name_fr": "Risque Allergique PACA",
-	"icon": "atmosud_pollens.png",
-	"version": "1.0",
+	"name_fr": "Risque Allergique PACA / AURA",
+	"icon": "atmo_pollens.png",
+	"version": "2.0",
 	"creation_date": "2018-07-17",
-	"modification_date": "2018-07-18",
-	"author": "timetre",
-	"description_fr": "Suivez les risques d'allergies aux pollens pour la région PACA, source : <i>AtmoSud</i>)",
-	"description_en": "",
+	"modification_date": "2018-07-24",
+	"author": "<a href='https://forum.eedomus.com/memberlist.php?mode=viewprofile&u=2569'>timetre</a>",
+	"description_fr": "Suivez les risques d'allergies aux pollens pour les régions PACA ou AURA, source : <i>AtmoSud / AtmoAURA</i>",
+	"description_en": "Follow the risks of pollen allergy in the PACA or AURA regions, source : <i>AtmoSud / Atmo AURA</i>",
 	"description_es": "",
 	"description_it": "",
 	"description_de": "",
-	"forum_link": "",
+	"forum_link": "https://forum.eedomus.com/viewtopic.php?f=50&t=7250",
 	"parameters":
 	[
 		{
 			"parameter": "VILLE",
 			"description": "Ville",
 			"xtype": "combo",
-			"field": "width:200, allowBlank:false, store:['Aix-en-Provence', 'Gap', 'Marseille', 'Nice', 'Toulon', 'Avignon'], editable: false, shadow: true, triggerAction: 'all', typeAhead:true"
+			"field": "width:200, allowBlank:false, store:['Aix-en-Provence', 'Annemasse', 'Aurillac', 'Bourg en Bresse', 'Chambéry', 'Clermont-Ferrand', 'Gap', 'Grenoble', 'Le Puy-en-Velay', 'Lyon', 'Marseille', 'Nice', 'Roussillon', 'Saint-Etienne', 'Toulon', 'Avignon'], editable: false, shadow: true, triggerAction: 'all', typeAhead:true"
+		}
+	],
+	"scripts":
+	[
+		{
+			"name": "atmo_pollens.php"
 		}
 	],
 	"devices":
 	[
 		{
-			"device_id": "atmosudpollens",
+			"device_id": "atmorisque",
 			"module_id": "51",
 			"type": "http",
-			"name_fr": "plugin.name",
-			"icon": "atmosud_pollens.png",
+			"name_fr": "Risque Allergique plugin.parameters.VILLE",
+			"icon": "atmo_pollens.png",
 			"utilisation_id": "35",
 			"parameters":
 			{
+				"VAR1": "plugin.parameters.VILLE",
 				"value_type": "list",
 				"ignore_errors": 3,
-				"RAW_URL": "http://localhost/script/?exec=atmosud_pollens.php",
-				"RAW_XPATH": "/IndicesPolliniques/Element[Ville='plugin.parameters.VILLE']/Indice",
-				"POLLING": "60"
+				"RAW_URL": "http://localhost/script/?exec=atmo_pollens.php&ville=[VAR1]",
+				"RAW_XPATH": "/RisqueAllergique/Indice",
+				"POLLING": "720"
 			},
 			"values":
 			[
-				{ "value": "ND", "description": "Non diffusé", "icon": "atmosud_pollens_ND.png" },
-				{ "value": 0, "description": "Nul", "icon": "atmosud_pollens_0.png" },
-				{ "value": 1, "description": "Très faible", "icon": "atmosud_pollens_1.png" },
-				{ "value": 2, "description": "Faible", "icon": "atmosud_pollens_2.png" },
-				{ "value": 3, "description": "Moyen", "icon": "atmosud_pollens_3.png" },
-				{ "value": 4, "description": "Elevé", "icon": "atmosud_pollens_4.png" },
-				{ "value": 5, "description": "Très élevé", "icon": "atmosud_pollens_5.png" }
+				{ "value": "ND", "description": "Non diffusé", "icon": "atmo_pollens_ND.png" },
+				{ "value": 0, "description": "Nul", "icon": "atmo_pollens_0.png" },
+				{ "value": 1, "description": "Très faible", "icon": "atmo_pollens_1.png" },
+				{ "value": 2, "description": "Faible", "icon": "atmo_pollens_2.png" },
+				{ "value": 3, "description": "Moyen", "icon": "atmo_pollens_3.png" },
+				{ "value": 4, "description": "Elevé", "icon": "atmo_pollens_4.png" },
+				{ "value": 5, "description": "Très élevé", "icon": "atmo_pollens_5.png" }
 			]
+		},
+				{
+			"device_id": "atmopollens",
+			"parent_id": "atmorisque",
+			"module_id": "51",
+			"type": "http",
+			"name_fr": "Allergènes plugin.parameters.VILLE",
+			"icon": "atmo_pollens.png",
+			"utilisation_id": "35",
+			"parameters":
+			{
+				"VAR1": "plugin.parameters.VILLE",
+				"value_type": "string",
+				"ignore_errors": 3,
+				"RAW_URL": "http://localhost/script/?exec=atmo_pollens.php&ville=[VAR1]",
+				"RAW_XPATH": "/RisqueAllergique/Pollens",
+				"POLLING": "720"
+			}
 		}
+
 	]
 }
