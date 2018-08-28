@@ -1,6 +1,6 @@
 <?
 
-// Version v2.0
+// Version v2.1
 // Ce script Donne le niveau d'exposition aux pollens en région PACA et AURA
 // Source AtmoSud / AtmoAURA
 
@@ -54,8 +54,11 @@ for($i = 1; $i <= xpath($xml, "count(//entry)") ; $i++)
     if($ville == $paramville)
     {
         echo "<Ville>".$ville."</Ville>";
-        echo "<Indice>".substr(xpath($xml,"//entry[$i]/class"), -1)."</Indice>";
-        $pollens = "<Pollens>";
+	$indice = substr(xpath($xml,"//entry[$i]/class"), -1);
+        if($indice == 'D')
+            $indice = 'ND';
+        echo "<Indice>".$indice."</Indice>";
+            $pollens = "<Pollens>";
     
         for($j = 1; $j <= xpath($tooltip, "count(//li)") ; $j++)
         {
